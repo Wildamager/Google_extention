@@ -1,0 +1,28 @@
+{
+    "name": "VK&SPOTIFY",
+    "description": "Add music from VK to SPOTIFY",
+    "version": "1.0",
+    "manifest_version": 2,
+    "icons":{
+      "16": "Icons/spotify-16.png",
+      "48": "Icons/spotify-48.png",
+      "128": "Icons/spotify-128.png"
+    },
+    "browser_action":{
+      "default_icon": {
+        "16":"Icons/spotify-16.png",
+        "48":"Icons/spotify-48.png"},
+      "default_title":  "My Text Extension",
+      "default_popup":"popup.html"
+    },
+    "content_scripts": [{
+      "matches": ["*://vk.com/*"],
+      "js": ["content.js"],
+      "all_frames": true,
+      "match_about_blank": true
+    }],
+    "permissions":["activeTab",
+                  "contextMenus"],
+    "background": {"service_worker": "background.js",
+                    "type":"module"}
+}
