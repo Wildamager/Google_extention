@@ -12,8 +12,8 @@
       "default_icon": {
         "16":"Icons/spotify-16.png",
         "48":"Icons/spotify-48.png"},
-      "default_title":  "My Text Extension",
-      "default_popup":"popup.html"
+      "default_title":  "Search music in Spotify",
+      "default_popup":"popup/popup.html"
     },
     "content_scripts": [{
       "matches": ["*://vk.com/*"],
