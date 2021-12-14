@@ -13,7 +13,7 @@
         "16":"Icons/spotify-16.png",
         "48":"Icons/spotify-48.png"},
       "default_title":  "Search music in Spotify",
-      "default_popup":"popup/popup.html"
+      "default_popup":"SignIn.html"
     },
     "content_scripts": [{
       "matches": ["*://vk.com/*"],
@@ -22,7 +22,11 @@
       "match_about_blank": true
     }],
     "permissions":["activeTab",
-                  "contextMenus"],
+                  "contextMenus",
+                  "identity"],
     "background": {"service_worker": "background.js",
-                    "type":"module"}
+                    "type":"module"},
+    "web_accessible_resources": [
+                                "/oauth2/*"
+                                ]     
 }
