@@ -15,6 +15,9 @@ chrome.contextMenus.onClicked.addListener(function(info,tab){
     }
 })
 let music=[];
+chrome.runtime.onMessage.addListener(function(request,senger,sendResponse) {
+    music=request.done;
+  });
 
 
   const CLIENT_ID = encodeURIComponent('0333bde7cf744533976bdbd69d61aa75');
