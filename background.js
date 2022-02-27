@@ -106,8 +106,15 @@ function msg(){
     console.log(music);
 }
 
-function test_pars_json(data){
+function test_pars_json(data,music){
     console.log(data['tracks']);
+    chrome.runtime.onConnect.addListener(function(port) {
+        console.assert(port.name === "knockknock");
+        port.onMessage.addListener(function(msg) {
+          if (msg.joke === "Lets working")
+            port.postMessage({done: music});
+        });
+    });
 }
 
 chrome.contextMenus.onClicked.addListener(function(info,tab){
