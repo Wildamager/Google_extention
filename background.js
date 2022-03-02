@@ -30,7 +30,7 @@ function create_spotify_endpoint() {
     return oauth2_url;
 }
 
-    ///"https://api.spotify.com/v1/search?q=Linkin+Park&type=track&limit=5&access_token=\(token)" 
+///"https://api.spotify.com/v1/search?q=Linkin+Park&type=track&limit=5&access_token=\(token)" 
 
 
   
