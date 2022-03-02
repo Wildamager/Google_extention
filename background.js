@@ -94,8 +94,9 @@ function search_music(ACCESS_TOKEN,music){
     console.log(q)
     fetch(`https://api.spotify.com/v1/search?q=${q}?&type=track&limit=5&access_token=${ACCESS_TOKEN}`).then(function(response){
         response.json().then(function(data) {
-            test_pars_json(data,music)
-            console.log(data['tracks'])
+            let url=data.tracks.items[0].album.images[1].url
+            test_pars_json(data,music,url)
+            
         });
         }).catch(function(error) {
             console.log('Fetch Error:', error);
@@ -106,13 +107,13 @@ function msg(){
     console.log(music);
 }
 
-function test_pars_json(data,music){
+function test_pars_json(data,music,url){
     console.log(data['tracks']);
     chrome.runtime.onConnect.addListener(function(port) {
         console.assert(port.name === "knockknock");
         port.onMessage.addListener(function(msg) {
           if (msg.joke === "Lets working")
-            port.postMessage({done: music});
+            port.postMessage({done: music, info: url});
         });
     });
 }
