@@ -52,8 +52,31 @@
         width: 450px;
         height: 100px;
       }
-      
-
+      .button {
+        float: right;
+        height: 25px;
+        width: 40px;
+        background-color: #4CAF50; /* Green */
+        border: none;
+        border-radius: 5px;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 10px;
+        margin: 13px 70px 10px 2px;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        cursor: pointer;
+      }
+      .button1 {
+        background-color: black; 
+        color: #4CAF50; 
+        border: 2px solid #4CAF50;
+      }
+      .button1:hover {
+        background-color: #4CAF50;
+        color: white;
+      }
     </style>
     <script src="music-script.js"></script>
 </head>
@@ -61,17 +84,18 @@
       <div class="link-conteiner">
         <div class="middle">
           <div class="link-cover">
-            <img class="obloshka" id="Image_of_albom" src="Icons\obloshka.jpg" width="100" height="100">
+            <img class="obloshka" id="Image_of_albom" src="Icons\waiting-spinning.gif" width="100" height="100">
           </div>
         </div>
         <div class="link-header-title">
-          <h1 id="name_of_track"></h1>
-          <h2 id="artist_of_track"></h2>
+          <h1 id="name_of_track">Track not yet</h1>
+          <h2 id="artist_of_track">selected</h2>
         </div>
         <div class="buttons-link">
           <span>
             <img class="link-opyion-row-img" width="100" height="30" src="https://st.toneden.io/production/images/link-services/spotify.png">
           </span>
+          <button class="button button1">Save</button>
         </div>
       </div>
   </body>
