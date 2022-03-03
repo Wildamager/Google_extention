@@ -8,5 +8,10 @@ port.onMessage.addListener(function(request) {
     document.getElementById('Image_of_albom').src=url_of_image
 });
 
-
+window.onload=function(){
+    let btn=document.getElementById("save");
+    btn.addEventListener("click",async()=>{
+        port.postMessage({joke: "Lets save"})
+    })
+}
 

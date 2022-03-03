@@ -1,4 +1,5 @@
 let music=[];
+
 chrome.runtime.onMessage.addListener(function(request,senger,sendResponse) {
     music=request.done;
 });
@@ -13,7 +14,7 @@ chrome.runtime.onInstalled.addListener(() => {
 const CLIENT_ID = encodeURIComponent('0333bde7cf744533976bdbd69d61aa75');
 const RESPONSE_TYPE = encodeURIComponent('token');
 const REDIRECT_URI = encodeURIComponent('https://pobbbfjbnhjfkmnjddefcchncbofdfeh.chromiumapp.org/');
-const SCOPE = encodeURIComponent('user-read-email, user-read-private');
+const SCOPE = encodeURIComponent('user-read-email, user-read-private, user-library-modify');
 const SHOW_DIALOG = encodeURIComponent('true');
 let STATE = '';
 let ACCESS_TOKEN = '';
@@ -94,8 +95,9 @@ function search_music(ACCESS_TOKEN,music){
     console.log(q)
     fetch(`https://api.spotify.com/v1/search?q=${q}?&type=track&limit=5&access_token=${ACCESS_TOKEN}`).then(function(response){
         response.json().then(function(data) {
-            let url=data.tracks.items[0].album.images[1].url
-            test_pars_json(data,music,url)
+            let url=data.tracks.items[0].album.images[1].url;
+            let id_music=data.tracks.items[0].id;
+            test_pars_json(ACCESS_TOKEN,id_music,data,music,url);
             
         });
         }).catch(function(error) {
@@ -103,17 +105,32 @@ function search_music(ACCESS_TOKEN,music){
         });
 }
 
+function save_music(ACCESS_TOKEN,id_music){
+    console.log(id_music);
+    console.log(`https://api.spotify.com/v1/me/tracks?ids=${id_music}&access_token=${ACCESS_TOKEN}`)
+    let response=fetch(`https://api.spotify.com/v1/me/tracks?ids=${id_music}`,{
+        method: 'PUT',
+        headers:{
+            Authorization: 'Bearer '+ACCESS_TOKEN
+        }
+    })
+    console.log(response)
+}
+
+
 function msg(){
     console.log(music);
 }
 
-function test_pars_json(data,music,url){
+function test_pars_json(ACCESS_TOKEN,id_music,data,music,url){
     console.log(data['tracks']);
     chrome.runtime.onConnect.addListener(function(port) {
         console.assert(port.name === "knockknock");
         port.onMessage.addListener(function(msg) {
-          if (msg.joke === "Lets working")
-            port.postMessage({done: music, info: url});
+            if (msg.joke === "Lets working")
+                port.postMessage({done: music, info: url});
+            else
+                save_music(ACCESS_TOKEN,id_music)
         });
     });
 }
