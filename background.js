@@ -92,7 +92,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 function search_music(ACCESS_TOKEN,music){
     console.log(ACCESS_TOKEN)
     let q=music[1].replace(' ','+')
-    console.log(q)
+    console.log(`https://api.spotify.com/v1/search?q=${q}?&type=track&limit=5&access_token=${ACCESS_TOKEN}`)
     fetch(`https://api.spotify.com/v1/search?q=${q}?&type=track&limit=5&access_token=${ACCESS_TOKEN}`).then(function(response){
         response.json().then(function(data) {
             let url=data.tracks.items[0].album.images[1].url;
@@ -115,6 +115,7 @@ function save_music(ACCESS_TOKEN,id_music){
         }
     })
     console.log(response)
+    response=''
 }
 
 
@@ -129,7 +130,7 @@ function test_pars_json(ACCESS_TOKEN,id_music,data,music,url){
         port.onMessage.addListener(function(msg) {
             if (msg.joke === "Lets working")
                 port.postMessage({done: music, info: url});
-            else
+            if (msg.joke === "Lets save")
                 save_music(ACCESS_TOKEN,id_music)
         });
     });
