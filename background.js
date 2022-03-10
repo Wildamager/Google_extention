@@ -26,8 +26,6 @@ function create_spotify_endpoint() {
     let oauth2_url =
           `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&redirect_uri=${REDIRECT_URI}&state=${STATE}&scope=${SCOPE}&show_dialog=${SHOW_DIALOG}`;
   
-    console.log(oauth2_url);
-  
     return oauth2_url;
 }
 
@@ -90,14 +88,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     
 
 function search_music(ACCESS_TOKEN,music){
-    console.log(ACCESS_TOKEN)
     let q=music[1].replace(' ','+')
-    console.log(`https://api.spotify.com/v1/search?q=${q}?&type=track&limit=5&access_token=${ACCESS_TOKEN}`)
     fetch(`https://api.spotify.com/v1/search?q=${q}?&type=track&limit=5&access_token=${ACCESS_TOKEN}`).then(function(response){
         response.json().then(function(data) {
-            let url=data.tracks.items[0].album.images[1].url;
+            try{
+                let url=data.tracks.items[0].album.images[1].url;
             let id_music=data.tracks.items[0].id;
             test_pars_json(ACCESS_TOKEN,id_music,data,music,url);
+            }
+            catch{
+                console.log('please, reload the page or extension')
+            }
             
         });
         }).catch(function(error) {
@@ -106,8 +107,6 @@ function search_music(ACCESS_TOKEN,music){
 }
 
 function save_music(ACCESS_TOKEN,id_music){
-    console.log(id_music);
-    console.log(`https://api.spotify.com/v1/me/tracks?ids=${id_music}&access_token=${ACCESS_TOKEN}`)
     let response=fetch(`https://api.spotify.com/v1/me/tracks?ids=${id_music}`,{
         method: 'PUT',
         headers:{
@@ -115,7 +114,6 @@ function save_music(ACCESS_TOKEN,id_music){
         }
     })
     console.log(response)
-    response=''
 }
 
 
