@@ -1,5 +1,4 @@
 let error;
-
 document.addEventListener("contextmenu", function(event){
     let track_elem=document.activeElement;
     artist_elem=track_elem.querySelectorAll("a.artist_link");

@@ -28,10 +28,6 @@ function create_spotify_endpoint() {
   
     return oauth2_url;
 }
-
-///"https://api.spotify.com/v1/search?q=Linkin+Park&type=track&limit=5&access_token=\(token)" 
-
-
   
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message === 'login') {
@@ -123,15 +119,12 @@ function msg(){
 
 function test_pars_json(ACCESS_TOKEN,id_music,data,music,url){
     console.log(data['tracks']);
-    chrome.runtime.onConnect.addListener(function(port) {
-        console.assert(port.name === "knockknock");
-        port.onMessage.addListener(function(msg) {
+        chrome.runtime.onMessage.addListener(function(msg) {
             if (msg.joke === "Lets working")
-                port.postMessage({done: music, info: url});
+                chrome.runtime.sendMessage({done: music, info: url});
             if (msg.joke === "Lets save")
                 save_music(ACCESS_TOKEN,id_music)
         });
-    });
 }
 
 chrome.contextMenus.onClicked.addListener(function(info,tab){

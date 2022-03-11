@@ -1,6 +1,5 @@
-var port = chrome.runtime.connect({name: "knockknock"});
-port.postMessage({joke: "Lets working"});
-port.onMessage.addListener(function(request) {
+chrome.runtime.sendMessage({joke: "Lets working"});
+chrome.runtime.onMessage.addListener(function(request) {
     let info_of_music=request.done
     let url_of_image=request.info
     document.getElementById("name_of_track").innerHTML = info_of_music[1]
@@ -11,7 +10,7 @@ port.onMessage.addListener(function(request) {
 window.onload=function(){
     let btn=document.getElementById("save");
     btn.addEventListener("click",async()=>{
-        port.postMessage({joke: "Lets save"})
+        chrome.runtime.sendMessage({joke: "Lets save"})
     })
 }
 
